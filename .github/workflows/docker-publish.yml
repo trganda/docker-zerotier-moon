@@ -38,9 +38,6 @@ jobs:
       packages: write
 
     steps:
-      - name: Test
-        run: echo "${{ needs.check.outputs.RELEASE_VERSION != needs.check.outputs.CURRENT_VERSION }} ${{ needs.check.outputs.RELEASE_VERSION }} ${{ needs.check.outputs.CURRENT_VERSION }}"
-        
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
 
@@ -73,21 +70,18 @@ jobs:
         with:
           images: jongsx/zerotier-moon,ghcr.io/trganda/zerotier-moon
 
-      - name: Tags
-        run: echo "${{ steps.meta.outputs.tags }}"
-
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v2
-      #   with:
-      #     context: .
-      #     push: ${{ github.event_name != 'pull_request' }}
-      #     tags: ${{ steps.meta.outputs.tags }}
-      #     labels: ${{ steps.meta.outputs.labels }}
-      #     platforms: linux/amd64,linux/386,linux/ppc64le,linux/s390x,linux/arm64,linux/arm/v6,linux/arm/v7,linux/riscv64
-      #     builder: ${{ steps.buildx.outputs.name }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ needs.check.outputs.RELEASE_VERSION }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: linux/amd64,linux/386,linux/ppc64le,linux/s390x,linux/arm64,linux/arm/v6,linux/arm/v7,linux/riscv64
+          builder: ${{ steps.buildx.outputs.name }}
 
-      # - name: Update
-      #   run: |
-      #     echo "$RELEASE_VERSION" > ZEROTIER_VERSION
+      - name: Update ZEROTIER_VERSION
+        run: |
+          echo "$RELEASE_VERSION" > ZEROTIER_VERSION
