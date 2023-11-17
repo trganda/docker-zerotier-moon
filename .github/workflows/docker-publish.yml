@@ -28,9 +28,6 @@ jobs:
           echo "RELEASE_VERSION=${{ steps.zerotierone.outputs.release }}" >> $GITHUB_OUTPUT \
           && echo "CURRENT_VERSION=$(cat ZEROTIER_VERSION)" >> $GITHUB_OUTPUT
 
-      - name: Test
-        run: echo "${{ needs.check.outputs.RELEASE_VERSION != needs.check.outputs.CURRENT_VERSION }} ${{ needs.check.outputs.RELEASE_VERSION }} ${{ needs.check.outputs.CURRENT_VERSION }}"
-        
   build:
     needs: check
     if: ${{ needs.check.outputs.RELEASE_VERSION != needs.check.outputs.CURRENT_VERSION }}
@@ -41,6 +38,9 @@ jobs:
       packages: write
 
     steps:
+      - name: Test
+        run: echo "${{ needs.check.outputs.RELEASE_VERSION != needs.check.outputs.CURRENT_VERSION }} ${{ needs.check.outputs.RELEASE_VERSION }} ${{ needs.check.outputs.CURRENT_VERSION }}"
+        
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
 
@@ -57,24 +57,27 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
 
-      # - name: Login to GitHub Container Registry
-      #   uses: docker/login-action@v1
-      #   if: github.event_name != 'pull_request'
-      #   with:
-      #     registry: ghcr.io
-      #     username: ${{ github.actor }}
-      #     password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        if: github.event_name != 'pull_request'
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
-      # # Extract metadata (tags, labels) for Docker
-      # # https://github.com/docker/metadata-action
-      # - name: Extract Docker metadata
-      #   id: meta
-      #   uses: docker/metadata-action@v3
-      #   with:
-      #     images: seedgou/zerotier-moon,ghcr.io/rwv/zerotier-moon
+      # Extract metadata (tags, labels) for Docker
+      # https://github.com/docker/metadata-action
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v3
+        with:
+          images: jongsx/zerotier-moon,ghcr.io/trganda/zerotier-moon
 
-      # # Build and push Docker image with Buildx (don't push on PR)
-      # # https://github.com/docker/build-push-action
+      - name: Tags
+        run: echo "${{ steps.meta.outputs.tags }}"
+
+      # Build and push Docker image with Buildx (don't push on PR)
+      # https://github.com/docker/build-push-action
       # - name: Build and push Docker image
       #   uses: docker/build-push-action@v2
       #   with:
