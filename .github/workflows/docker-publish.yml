@@ -7,6 +7,9 @@ on:
 jobs:
   check:
     runs-on: ubuntu-latest
+    outputs:
+      RELEASE_VERSION: ${{ steps.compare.outputs.RELEASE_VERSION }}
+      CURRENT_VERSION: ${{ steps.compare.outputs.CURRENT_VERSION }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4.1.1
@@ -19,7 +22,8 @@ jobs:
           repo: ZeroTierOne
           excludes: prerelease, draft
 
-      - name: compare
+      - name: Compare
+        id: compare
         run: |
           echo "RELEASE_VERSION=${{ steps.zerotierone.outputs.release }}" >> $GITHUB_OUTPUT \
           && echo "CURRENT_VERSION=$(cat ZEROTIER_VERSION)" >> $GITHUB_OUTPUT
