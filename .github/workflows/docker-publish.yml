@@ -9,7 +9,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
 
       - name: Get latest release
         id: zerotierone
@@ -19,14 +19,14 @@ jobs:
           repo: ZeroTierOne
           excludes: prerelease, draft
 
-      - name: Test
-        run: echo "${{ steps.zerotierone.outputs.release }}"
-
       - name: compare
         run: |
           echo "RELEASE_VERSION=${{ steps.zerotierone.outputs.release }}" >> $GITHUB_OUTPUT \
           && echo "CURRENT_VERSION=$(cat ZEROTIER_VERSION)" >> $GITHUB_OUTPUT
 
+      - name: Test
+        run: echo "${{ needs.build.check.RELEASE_VERSION != needs.build.check.CURRENT_VERSION }}"
+        
   build:
     needs: check
     if: ${{ needs.build.check.RELEASE_VERSION != needs.build.check.CURRENT_VERSION }}
@@ -38,7 +38,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4.1.1
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
