@@ -25,11 +25,11 @@ jobs:
           && echo "CURRENT_VERSION=$(cat ZEROTIER_VERSION)" >> $GITHUB_OUTPUT
 
       - name: Test
-        run: echo "${{ needs.check.RELEASE_VERSION != needs.check.CURRENT_VERSION }} ${{ needs.check.RELEASE_VERSION }} ${{ needs.check.CURRENT_VERSION }}"
+        run: echo "${{ needs.check.outputs.RELEASE_VERSION != needs.check.outputs.CURRENT_VERSION }} ${{ needs.check.outputs.RELEASE_VERSION }} ${{ needs.check.outputs.CURRENT_VERSION }}"
         
   build:
     needs: check
-    if: ${{ needs.check.RELEASE_VERSION != needs.check.CURRENT_VERSION }}
+    if: ${{ needs.check.outputs.RELEASE_VERSION != needs.check.outputs.CURRENT_VERSION }}
     runs-on: ubuntu-latest
 
     permissions:
