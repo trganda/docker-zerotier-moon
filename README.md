@@ -11,7 +11,7 @@
 <br>
 A docker image to create ZeroTier moon in one setp.
 
-Modified from: [rwv/zerotier](https://github.com/rwv/docker-zerotier).
+Modified from: [rwv/zerotier](https://github.com/rwv/docker-zerotier-moon).
 
 ## Table of Contents
 
