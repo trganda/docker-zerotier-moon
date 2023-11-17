@@ -1,12 +1,12 @@
 # docker-zerotier-moon
 
-<a href="https://github.com/rwv/docker-zerotier-moon/actions">
-    <img src="https://img.shields.io/github/workflow/status/rwv/docker-zerotier-moon/Docker" alt="GitHub Actions" />
+<a href="https://github.com/trganda/docker-zerotier-moon/actions">
+    <img src="https://img.shields.io/github/workflow/status/trganda/docker-zerotier-moon/Docker" alt="GitHub Actions" />
 </a>
-<a href="https://hub.docker.com/r/seedgou/zerotier-moon">
-    <img src="https://img.shields.io/docker/v/seedgou/zerotier-moon?sort=semver" alt="Docker Version" />
-    <img src="https://img.shields.io/docker/pulls/seedgou/zerotier-moon" alt="Docker Hub" />
-    <img src="https://img.shields.io/docker/image-size/seedgou/zerotier-moon/latest" alt="Docker Image Size" />
+<a href="https://hub.docker.com/r/trganda/zerotier-moon">
+    <img src="https://img.shields.io/docker/v/trganda/zerotier-moon?sort=semver" alt="Docker Version" />
+    <img src="https://img.shields.io/docker/pulls/trganda/zerotier-moon" alt="Docker Hub" />
+    <img src="https://img.shields.io/docker/image-size/trganda/zerotier-moon/latest" alt="Docker Image Size" />
 </a>
 <br>
 A docker image to create ZeroTier moon in one setp.
@@ -89,7 +89,7 @@ docker exec zerotier-moon zerotier-cli
 ### Mount ZeroTier conf folder
 
 ```
-docker run --name zerotier-moon -d -p 9993:9993/udp -v ~/somewhere:/var/lib/zerotier-one seedgou/zerotier-moon -4 1.2.3.4 
+docker run --name zerotier-moon -d -p 9993:9993/udp -v ~/somewhere:/var/lib/zerotier-one seedgou/zerotier-moon -4 1.2.3.4
 ```
 
 When creating a new container without mounting ZeroTier conf folder, a new moon id will be generated. This command will mount `~/somewhere` to `/var/lib/zerotier-one` inside the container, allowing your ZeroTier moon to presist the same moon id. If you don't do this, when you start a new container, a new moon id will be generated.
