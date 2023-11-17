@@ -1,14 +1,11 @@
-ARG ALPINE_VERSION=edge
+FROM ubuntu:jammy
 
-FROM alpine:${ALPINE_VERSION}
-
-ARG ZT_VERSION=1.8.4-r0
-
-LABEL maintainer="seedgou <seedgou@gmail.com>"
-
-RUN apk add --no-cache zerotier-one=${ZT_VERSION}
+RUN apt update \
+   && apt install curl -y \
+   && curl -s https://install.zerotier.com | bash
 
 COPY startup.sh /startup.sh
+
 EXPOSE 9993/udp
 
 ENTRYPOINT ["/startup.sh"]
