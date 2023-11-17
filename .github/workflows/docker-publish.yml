@@ -25,7 +25,7 @@ jobs:
           && echo "CURRENT_VERSION=$(cat ZEROTIER_VERSION)" >> $GITHUB_OUTPUT
 
       - name: Test
-        run: echo "${{ needs.build.check.RELEASE_VERSION != needs.build.check.CURRENT_VERSION }}"
+        run: echo "${{ needs.build.check.RELEASE_VERSION != needs.build.check.CURRENT_VERSION }} ${{ needs.build.check.RELEASE_VERSION }} ${{ needs.build.check.CURRENT_VERSION }}"
         
   build:
     needs: check
