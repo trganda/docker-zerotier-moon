@@ -24,12 +24,12 @@ jobs:
 
       - name: compare
         run: |
-          echo "RELEASE_VERSION=${{ steps.keydb.outputs.release }}" >> $GITHUB_ENV \
-          && echo "CURRENT_VERSION=$(cat ZEROTIER_VERSION)" >> $GITHUB_ENV
+          echo "RELEASE_VERSION=${{ steps.keydb.outputs.release }}" >> $GITHUB_OUTPUT \
+          && echo "CURRENT_VERSION=$(cat ZEROTIER_VERSION)" >> $GITHUB_OUTPUT
 
   build:
     needs: check
-    if: ${{ env.RELEASE_VERSION != env.CURRENT_VERSION }}
+    if: ${{ needs.build.check.RELEASE_VERSION != needs.build.check.CURRENT_VERSION }}
     runs-on: ubuntu-latest
 
     permissions:
