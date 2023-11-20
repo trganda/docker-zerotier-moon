@@ -11,7 +11,7 @@
 <br>
 A docker image to create ZeroTier moon in one setp.
 
-Modified from: [rwv/zerotier](https://github.com/rwv/docker-zerotier-moon).
+Modified from: [rwv/zerotier](https://github.com/rwv/docker-zerotier-moon), supported architecture: linux/amd64,linux/ppc64le,linux/s390x,linux/arm64,linux/arm/v7,linux/arm64/v8.
 
 ## Table of Contents
 
@@ -123,8 +123,4 @@ See Also [Issue #1](https://github.com/rwv/docker-zerotier-moon/issues/1).
 
 ### Multi-arch support
 
-This image supports `linux/386`, `linux/amd64`, `linux/ppc64le`, `linux/arm64`, `linux/arm/v7`, `linux/arm/v6`, `linux/s390x` and `linux/riscv64`.
-
-### GitHub Container Registry
-
-This image is also published on GitHub Container Registry: [`ghcr.io/rwv/zerotier-moon`](https://ghcr.io/rwv/zerotier-moon)
+This image supports `linux/amd64`, `linux/ppc64le`, `linux/arm64`, `linux/arm/v7`, `linux/arm64/v8` and `linux/s390x`.
