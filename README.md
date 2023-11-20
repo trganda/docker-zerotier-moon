@@ -35,7 +35,7 @@ Modified from: [rwv/zerotier](https://github.com/rwv/docker-zerotier-moon), supp
 ### Start a container
 
 ```
-docker run --name zerotier-moon -d --restart always -p 9993:9993/udp -v ~/somewhere:/var/lib/zerotier-one seedgou/zerotier-moon -4 1.2.3.4
+docker run --name zerotier-moon -d --restart always -p 9993:9993/udp -v ~/somewhere:/var/lib/zerotier-one jongsx/zerotier-moon -4 1.2.3.4
 ```
 
 Replace `1.2.3.4` with your moon's IPv4 address and replace `~/somewhere` with where you would like to store your configuration.
@@ -57,7 +57,7 @@ version: "3"
 
 services:
   zerotier-moon:
-    image: seedgou/zerotier-moon
+    image: jongsx/zerotier-moon
     container_name: "zerotier-moon"
     restart: always
     ports:
@@ -89,7 +89,7 @@ docker exec zerotier-moon zerotier-cli
 ### Mount ZeroTier conf folder
 
 ```
-docker run --name zerotier-moon -d -p 9993:9993/udp -v ~/somewhere:/var/lib/zerotier-one seedgou/zerotier-moon -4 1.2.3.4
+docker run --name zerotier-moon -d -p 9993:9993/udp -v ~/somewhere:/var/lib/zerotier-one jongsx/zerotier-moon -4 1.2.3.4
 ```
 
 When creating a new container without mounting ZeroTier conf folder, a new moon id will be generated. This command will mount `~/somewhere` to `/var/lib/zerotier-one` inside the container, allowing your ZeroTier moon to presist the same moon id. If you don't do this, when you start a new container, a new moon id will be generated.
@@ -105,7 +105,7 @@ Replace `1.2.3.4`, `2001:abcd:abcd::1` with your moon's IP. You can remove `-4` 
 ### Custom port
 
 ```
-docker run --name zerotier-moon -d -p 9994:9993/udp seedgou/zerotier-moon -4 1.2.3.4 -p 9994
+docker run --name zerotier-moon -d -p 9994:9993/udp jongsx/zerotier-moon -4 1.2.3.4 -p 9994
 ```
 
 Replace 9994 with your own custom port for ZeroTier moon.
@@ -115,7 +115,7 @@ Replace 9994 with your own custom port for ZeroTier moon.
 If you encounter issue: `ERROR: unable to configure virtual network port: could not open TUN/TAP device: No such file or directory`, please add `--cap-add=NET_ADMIN --cap-add=SYS_ADMIN --device=/dev/net/tun` args. Similar to this:
 
 ```
-docker run --cap-add=NET_ADMIN --cap-add=SYS_ADMIN --device=/dev/net/tun --name zerotier-moon -d --restart always -p 9993:9993/udp seedgou/zerotier-moon -4 1.2.3.4
+docker run --cap-add=NET_ADMIN --cap-add=SYS_ADMIN --device=/dev/net/tun --name zerotier-moon -d --restart always -p 9993:9993/udp jongsx/zerotier-moon -4 1.2.3.4
 ```
 
 Solution provided by [Jonnyan404's Fork](https://github.com/Jonnyan404/docker-zerotier-moon).
